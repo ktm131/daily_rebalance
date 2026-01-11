@@ -10,8 +10,8 @@ EMA_LEN = 200
 LOOKBACK = 252
 
 ASSETS = {
-    "SP500": "SPY",
-    "NASDAQ": "QQQ",
+    "SP500": "^GSPC",
+    "NASDAQ": "^IXIC",
     "EEM": "EEM"
 }
 
@@ -25,8 +25,17 @@ W2 = 0.2
 # =====================
 @st.cache_data(ttl=3600)
 def load_prices(tickers):
-    df = yf.download(list(tickers.values()), period="2y", progress=False)["Close"]
+    df = yf.download(list(tickers.values()), period="5y", progress=False)["Close"]
     return df.dropna()
+
+prices = load_prices({**ASSETS, "WORLD": WORLD})
+
+if len(prices) < max(EMA_LEN, LOOKBACK):
+    st.error("❌ Za mało danych z Yahoo Finance (spróbuj ponownie później)")
+    st.stop()
+
+ema200 = prices[WORLD].ewm(span=EMA_LEN).mean().iloc[-1]
+price_now = prices[WORLD].iloc[-1]
 
 def calculate_momentum(prices):
     return prices.iloc[-1] / prices.iloc[-LOOKBACK] - 1

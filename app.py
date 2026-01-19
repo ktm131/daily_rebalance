@@ -23,6 +23,7 @@ W2 = 0.2
 # =====================
 # FUNKCJE
 # =====================
+@st.cache_data(ttl=1200)
 def load_prices(tickers):
     df = yf.download(list(tickers.values()), period="5y", progress=False)["Close"]
     return df.dropna()

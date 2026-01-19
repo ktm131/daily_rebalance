@@ -29,9 +29,9 @@ def load_prices(tickers):
     return df.dropna()
 
 prices = load_prices({**ASSETS, "WORLD": WORLD})
-
-if len(prices) < max(EMA_LEN, LOOKBACK):
-    st.error("❌ Za mało danych z Yahoo Finance (spróbuj ponownie później)")
+l = len(prices)
+if l < max(EMA_LEN, LOOKBACK):
+    st.error(f"❌ Za mało {l} danych z Yahoo Finance (spróbuj ponownie później)")
     st.stop()
 
 ema200 = prices[WORLD].ewm(span=EMA_LEN).mean().iloc[-1]

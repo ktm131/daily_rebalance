@@ -26,8 +26,7 @@ ASSETS = {
     "SP500":  "SPY",
     "NASDAQ": "QQQ",
     "EAFE":   "EFA",
-    "EEM":    "EEM",
-    "GOLD":   "GLD",
+    "EEM":    "EEM"
 }
 
 WORLD = "SPY"   # filtr trendu rynku

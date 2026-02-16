@@ -35,7 +35,7 @@ WORLD = "SPY"   # filtr trendu rynku
 # FUNKCJE
 # =====================
 
-# @st.cache_data(ttl=1800)
+@st.cache_data(ttl=1800)
 def load_prices(tickers):
     df = yf.download(list(tickers.values()), period="6y", progress=False)["Close"]
     return df.dropna()

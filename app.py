@@ -35,7 +35,7 @@ WORLD = "SPY"   # filtr trendu rynku
 # FUNKCJE
 # =====================
 
-@st.cache_data(ttl=1800)
+@st.cache_data(ttl=60)
 def load_prices(tickers):
     df = yf.download(list(tickers.values()), period="6y", progress=False)["Close"]
     return df.dropna()
@@ -131,11 +131,6 @@ else:
 
     for k, v in allocation.items():
         st.write(f"- {k}: {int(v*100)}%")
-
-
-if st.sidebar.button("🔄 Wyczyść cache"):
-    st.cache_data.clear()
-    st.experimental_rerun()
 
 st.divider()
 st.caption(f"Dane: Yahoo Finance | Aktualizacja: {date.today()} | Model: Global Momentum Core")

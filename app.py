@@ -132,5 +132,10 @@ else:
     for k, v in allocation.items():
         st.write(f"- {k}: {int(v*100)}%")
 
+
+if st.sidebar.button("🔄 Wyczyść cache"):
+    st.cache_data.clear()
+    st.experimental_rerun()
+
 st.divider()
 st.caption(f"Dane: Yahoo Finance | Aktualizacja: {date.today()} | Model: Global Momentum Core")
